@@ -19,7 +19,7 @@ const MainHero3D: React.FC = () => {
 
             // monkey /models/monkey.glb
             const loader = new GLTFLoader();
-            loader.load('/models/monkey.glb', (gltf) => {
+            loader.load('/models/model1.glb', (gltf) => {
                 scene.add(gltf.scene);
                 gltf.scene.position.y = 0;
                 gltf.scene.position.x = 0;
