@@ -17,58 +17,58 @@ import background from '../assets/background.svg';
 </div>
 
 <script>
-	import * as THREE from 'three';
-	import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+	// import * as THREE from 'three';
+	// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-	const scene = new THREE.Scene();
-	// scene.background = new THREE.Color(0x666666);
-	const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+	// const scene = new THREE.Scene();
+	// // scene.background = new THREE.Color(0x666666);
+	// const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-	const renderer = new THREE.WebGLRenderer({alpha: true});
-	renderer.setSize(800, 600);
-	const cubeElement = document.getElementById('cube');
-	if (cubeElement) {
-		cubeElement.appendChild(renderer.domElement);
-	}
+	// const renderer = new THREE.WebGLRenderer({alpha: true});
+	// renderer.setSize(800, 600);
+	// const cubeElement = document.getElementById('cube');
+	// if (cubeElement) {
+	// 	cubeElement.appendChild(renderer.domElement);
+	// }
 
-	// cubo
-	const geometry = new THREE.BoxGeometry(1, 1, 1);
-	const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
-	const cube = new THREE.Mesh(geometry, material);
-	cube.castShadow = true;
-	cube.position.set(1, 0, 1);
-	scene.add(cube);
+	// // cubo
+	// const geometry = new THREE.BoxGeometry(1, 1, 1);
+	// const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+	// const cube = new THREE.Mesh(geometry, material);
+	// cube.castShadow = true;
+	// cube.position.set(1, 0, 1);
+	// scene.add(cube);
 
-	// luz
-	const light = new THREE.DirectionalLight(0xffffff, 10);
-	light.position.set(-10, 50, 10);
-	light.castShadow = true;
-	scene.add(light);
+	// // luz
+	// const light = new THREE.DirectionalLight(0xffffff, 10);
+	// light.position.set(-10, 50, 10);
+	// light.castShadow = true;
+	// scene.add(light);
 
-	// plano
-	const plane = new THREE.PlaneGeometry(20, 20, 32, 32);
-	const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 });
-	const planeMesh = new THREE.Mesh(plane, planeMaterial);
-	planeMesh.receiveShadow = true;
-	planeMesh.position.set(0, 0, 0);
-	scene.add(planeMesh);
+	// // plano
+	// const plane = new THREE.PlaneGeometry(20, 20, 32, 32);
+	// const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+	// const planeMesh = new THREE.Mesh(plane, planeMaterial);
+	// planeMesh.receiveShadow = true;
+	// planeMesh.position.set(0, 0, 0);
+	// scene.add(planeMesh);
 
-	// var grid = new THREE.GridHelper(100, 10);
-	// scene.add(grid);
+	// // var grid = new THREE.GridHelper(100, 10);
+	// // scene.add(grid);
 
-	camera.position.z = 5;
-	camera.position.y = -3;
-	camera.rotation.x = .5;
+	// camera.position.z = 5;
+	// camera.position.y = -3;
+	// camera.rotation.x = .5;
 
-	// controls
-	const controls = new OrbitControls(camera, renderer.domElement);
+	// // controls
+	// const controls = new OrbitControls(camera, renderer.domElement);
 
-	function animate() {
-		requestAnimationFrame(animate);
-		// cube.rotation.x += 0.01;
-		// cube.rotation.y += 0.01;
-		renderer.render(scene, camera);
-	}
-	animate();
+	// function animate() {
+	// 	requestAnimationFrame(animate);
+	// 	// cube.rotation.x += 0.01;
+	// 	// cube.rotation.y += 0.01;
+	// 	renderer.render(scene, camera);
+	// }
+	// animate();
 
 </script>
