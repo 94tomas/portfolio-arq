@@ -47,9 +47,12 @@ const MainHero3D: React.FC = () => {
 
             // controls
             const controls = new OrbitControls(camera, renderer.domElement);
+            controls.minDistance = 2;
+            controls.maxDistance = 10;
 
             function animate() {
                 requestAnimationFrame(animate);
+                controls.update();
                 renderer.render(scene, camera);
             }
             animate();
@@ -84,36 +87,36 @@ const MainHero3D: React.FC = () => {
             <div ref={cubeRef} className='w-full h-full bg-gradient-to-b from-black to-transparent'></div>
 
             {/* menu lateral */}
-            <div className='absolute top-0 left-0 w-1/5 h-full bg-white/10 backdrop-blur-sm'>
-                <div className='p-12 flex flex-col justify-between h-full'>
-                    <ul className='flex flex-col gap-4 uppercase'>
-                        <li>
-                            <span className='text-[#0976E2] block font-bold'>01</span>
-                            <a href="#" className='text-white text-3xl'>
+            <div className='absolute top-0 left-0 w-96 h-full p-4 -translate-x-[calc(100%-12px)] hover:translate-x-0 transition-all duration-300 after:content-[""] after:absolute after:top-1/2 after:translate-y-[-50%] after:right-0 after:w-3 after:h-42 after:bg-primary after:rounded-r-lg after:z-[-1] after:cursor-pointer'>
+                <div className='bg-white/10 backdrop-blur-sm px-10 py-12 rounded-lg flex flex-col justify-between h-full'>
+                    <ul className='flex flex-col gap-6 uppercase'>
+                        <li className='group/item'>
+                            <span className='text-primary block font-bold transition-all duration-300'>01</span>
+                            <a href="#" className='text-white text-3xl inline-block font-bold group-hover/item:text-white group-hover/item:pl-2 transition-all duration-300'>
                                 Casa de campo
                             </a>
                         </li>
-                        <li>
-                            <span className='text-[#0976E2] block font-bold'>02</span>
-                            <a href="#" className='text-white/80 text-3xl'>
+                        <li className='group/item'>
+                            <span className='text-white/50 block font-bold group-hover/item:text-white transition-all duration-300'>02</span>
+                            <a href="#" className='text-white/50 text-3xl inline-block font-bold group-hover/item:text-white group-hover/item:pl-2 transition-all duration-300'>
                                 Edificio residencial
                             </a>
                         </li>
-                        <li>
-                            <span className='text-[#0976E2] block font-bold'>03</span>
-                            <a href="#" className='text-white/80 text-3xl'>
+                        <li className='group/item'>
+                            <span className='text-white/50 block font-bold group-hover/item:text-white transition-all duration-300'>03</span>
+                            <a href="#" className='text-white/50 text-3xl inline-block font-bold group-hover/item:text-white group-hover/item:pl-2 transition-all duration-300'>
                                 Casa de lujo
                             </a>
                         </li>
-                        <li>
-                            <span className='text-[#0976E2] block font-bold'>04</span>
-                            <a href="#" className='text-white/80 text-3xl'>
+                        <li className='group/item'>
+                            <span className='text-white/50 block font-bold group-hover/item:text-white transition-all duration-300'>04</span>
+                            <a href="#" className='text-white/50 text-3xl inline-block font-bold group-hover/item:text-white group-hover/item:pl-2 transition-all duration-300'>
                                 Edificio comercial
                             </a>
                         </li>
                     </ul>
 
-                    <a href="#" className='text-white bg-[#0976E2] px-4 py-2 rounded-lg inline-block text-center'>
+                    <a href="#" className='text-white bg-primary px-4 py-2 rounded-lg inline-block text-center'>
                         Ver más proyectos
                     </a>
                 </div>
