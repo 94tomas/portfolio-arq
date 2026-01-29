@@ -161,7 +161,7 @@ const MainHero3D: React.FC = () => {
                         </li>
                     </ul>
 
-                    <a href="#" className='text-white bg-primary px-4 py-2 rounded-lg inline-block text-center'>
+                    <a href="/proyects" className='text-white bg-primary px-4 py-2 rounded-lg inline-block text-center'>
                         Ver más proyectos
                     </a>
                 </div>

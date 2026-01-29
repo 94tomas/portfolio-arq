@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 ---
 <!doctype html>
 <html lang="en">
@@ -12,6 +14,8 @@ import '../styles/global.css';
 		<title>Portfolio</title>
 	</head>
 	<body class='bg-gray-900 text-white'>
+		<Header />
 		<slot />
+		<Footer />
 	</body>
 </html>
