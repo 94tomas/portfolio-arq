@@ -127,7 +127,7 @@ const MainHero3D: React.FC = () => {
         });
     }, [currentProject]);
     return (
-        <section className='w-full h-screen relative'>
+        <section id="hero" className='w-full h-screen relative'>
 
             <div ref={cubeRef} className='w-full h-full bg-gradient-to-b from-black to-transparent'></div>
 
@@ -161,7 +161,7 @@ const MainHero3D: React.FC = () => {
                         </li>
                     </ul>
 
-                    <a href="/proyects" className='text-white bg-primary px-4 py-2 rounded-lg inline-block text-center'>
+                    <a href="#proyects" className='text-white bg-primary px-4 py-2 rounded-lg inline-block text-center'>
                         Ver más proyectos
                     </a>
                 </div>

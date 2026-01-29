@@ -14,13 +14,13 @@ const Header: React.FC = () => {
                     <nav className='py-8'>
                         <ul className='flex items-center justify-end gap-4 text-white'>
                             <li>
-                                <a href="/">Inicio</a>
+                                <a href="#hero">Inicio</a>
                             </li>
                             <li>
                                 <a href="#about">Acerca de mi</a>
                             </li>
                             <li>
-                                <a href="/proyects">Proyectos</a>
+                                <a href="#proyects">Proyectos</a>
                             </li>
                             <li>
                                 <a href="#contact">Contactame</a>

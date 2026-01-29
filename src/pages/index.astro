@@ -2,8 +2,105 @@
 // import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
 import MainHero3D from '../components/MainHero3D';
+import banner01 from '../assets/banner02.jpg';
+import avatar from '../assets/banner02.jpg';
+
+const proyects = [
+	{
+		title: 'Proyecto 1',
+		description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.',
+		image: banner01.src,
+		link: '#'
+	},
+	{
+		title: 'Proyecto 1',
+		description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.',
+		image: banner01.src,
+		link: '#'
+	},
+	{
+		title: 'Proyecto 1',
+		description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.',
+		image: banner01.src,
+		link: '#'
+	},
+];
 ---
 
 <Layout>
 	<MainHero3D client:only />
+
+	<section id="about" class='py-12 md:py-24'>
+		<div class='w-full max-w-7xl mx-auto px-4'>
+			<span class="text-primary text-xs md:text-base border rounded-sm px-3 py-0.5 inline-block uppercase bg-primary/10">Biografia</span>
+			<div class="grid grid-cols-12 gap-4 md:gap-6 mt-10">
+				<div class="col-span-12 md:col-span-7">
+					<h2 class='text-2xl md:text-3xl xl:text-4xl font-bold text-white mb-4 uppercase'>Acerca de mi</h2>
+					<p class="text-white/50 text-lg md:text-xl mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum dolorem reiciendis sunt odio iusto ex debitis nisi, laudantium beatae labore est earum, nobis voluptas excepturi tempore expedita repellat, commodi cumque.</p>
+				</div>
+				<div class="col-span-12 md:col-span-5">
+					<div class="bg-white/10 backdrop-blur-sm p-4 rounded-lg border border-white/10 relative">
+						<p class="text-lg md:text-2xl font-thin italic mb-4">"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos."</p>
+						<div class="flex items-center gap-2">
+							<img src={avatar.src} alt="Avatar" class="w-15 h-15 rounded-full" />
+							<div>
+								<span class="text-white font-bold uppercase">John Doe</span> <br>
+								<span class="text-primary text-sm">Arquitecto principal</span>
+							</div>
+						</div>
+						<div class="w-15 h-15 flex items-center justify-center leading-none absolute -top-5 -right-5 rounded-lg text-white bg-primary text-5xl">
+							<span class="inline-block mt-3">❞</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="proyects" class='py-12 md:py-24'>
+		<div class='w-full max-w-7xl mx-auto px-4'>
+			<h2 class='text-2xl md:text-3xl xl:text-4xl font-bold text-white mb-4 uppercase'>Proyectos</h2>
+
+			<div class='grid grid-cols-12 gap-4 md:gap-6'>
+                {proyects.map((proyect) => (
+				<div class='col-span-12 md:col-span-6 lg:col-span-4'>
+                    <div class='bg-white/10 backdrop-blur-sm p-4 rounded-lg border border-white/10 group hover:border-primary hover:shadow-lg transition-all duration-300'>
+                        <div class='w-full aspect-5/6 relative overflow-hidden'>
+                            <img src={proyect.image} alt={proyect.title} class='w-full h-full object-cover group-hover:scale-110 transition-all duration-300' />
+                        </div>
+                        <div class='py-4'>
+                            <h3 class='text-lg md:text-xl font-bold text-white mb-2'>{proyect.title}</h3>
+                            <p class='text-white/40 text-sm md:text-base'>{proyect.description}</p>
+                        </div>
+                    </div>
+                </div>
+				))}
+            </div>
+		</div>
+	</section>
+
+	<section id="contact" class='py-12 md:py-24'>
+		<div class='w-full max-w-7xl mx-auto px-4'>
+			<h2 class='text-2xl md:text-3xl xl:text-4xl font-bold text-white mb-4 uppercase'>Contacto</h2>
+		</div>
+	</section>
 </Layout>
+
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		// scroll animation anchor
+		const anchors = document.querySelectorAll('a[href^="#"]');
+		anchors.forEach(anchor => {
+			anchor.addEventListener('click', function (e) {
+				e.preventDefault();
+				const target = (e.currentTarget as HTMLAnchorElement).getAttribute('href');
+				if (target) {
+					const element = document.querySelector(target);
+					if (element) {
+						element.scrollIntoView({ behavior: 'smooth' });
+					}
+				}
+			});
+		});	
+	});
+</script>
