@@ -4,7 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 const MainHero3D: React.FC = () => {
-    const [currentProject, setCurrentProject] = useState('monkey');
+    const [currentProject, setCurrentProject] = useState('casadeluxo');
 
     const handleProjectClick = (project: string) => {
         setCurrentProject(project);
@@ -16,10 +16,8 @@ const MainHero3D: React.FC = () => {
 
     // Mapeo de proyectos a modelos
     const projectModelMap: Record<string, string> = {
-        'monkey': '/models/monkey.glb',
-        'cube': '/models/cube.glb',
-        'cone': '/models/cone.glb',
-        'cylinder': '/models/cylinder.glb'
+        'casadeluxo': '/models/casadeluxo.glb',
+        'casaconcubiertasinclinadas': '/models/casaconcubiertasinclinadas.glb'
     };
 
     // Efecto para inicializar la escena 3D
@@ -33,29 +31,53 @@ const MainHero3D: React.FC = () => {
             const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
             const renderer = new THREE.WebGLRenderer({alpha: true});
             renderer.setSize(width, height);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
             container.appendChild(renderer.domElement);
 
-            // luz
-            const light = new THREE.DirectionalLight(0xffffff, 5);
-            light.position.set(-2, 2, 1);
-            light.castShadow = true;
-            scene.add(light);
-            const light2 = new THREE.DirectionalLight(0xffffff, 10);
-            light2.position.set(2, 2, -1);
-            light2.castShadow = true;
-            scene.add(light2);
+            // Iluminación ambiente (iluminación base suave)
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+            scene.add(ambientLight);
 
-            var grid = new THREE.GridHelper(100, 10);
-            scene.add(grid);
+            // Luz principal (key light) - iluminación principal desde arriba y delante
+            const mainLight = new THREE.DirectionalLight(0xffffff, 1.2);
+            mainLight.position.set(-5, 10, 5);
+            mainLight.castShadow = true;
+            scene.add(mainLight);
 
-            camera.position.x = -1.5;
-            camera.position.y = 2;
-            camera.position.z = 4;
+            // Luz de relleno (fill light) - iluminación suave desde el lado opuesto
+            const fillLight = new THREE.DirectionalLight(0xffffff, 0.6);
+            fillLight.position.set(5, 5, -5);
+            scene.add(fillLight);
+
+            // Luz de borde (rim light) - para destacar los bordes del modelo
+            const rimLight = new THREE.DirectionalLight(0xffffff, 0.4);
+            rimLight.position.set(0, 3, -8);
+            scene.add(rimLight);
+
+            // Plano base para los modelos
+            const planeGeometry = new THREE.PlaneGeometry(100, 100);
+            const planeMaterial = new THREE.MeshStandardMaterial({
+                color: 0x1a1a1a,
+                metalness: 0.1,
+                roughness: 0.8,
+                emissive: 0x000000,
+                emissiveIntensity: 0
+            });
+            const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+            plane.rotation.x = -Math.PI / 2; // Rotar para que quede horizontal
+            plane.position.y = -0.1; // Posicionar ligeramente por debajo del origen
+            plane.receiveShadow = true; // Recibir sombras
+            scene.add(plane);
+
+            camera.position.x = -15;
+            camera.position.y = 8;
+            camera.position.z = 22;
 
             // controls
             const controls = new OrbitControls(camera, renderer.domElement);
-            controls.minDistance = 2;
-            controls.maxDistance = 10;
+            // controls.minDistance = 2;
+            // controls.maxDistance = 10;
 
             function animate() {
                 requestAnimationFrame(animate);
@@ -129,34 +151,22 @@ const MainHero3D: React.FC = () => {
     return (
         <section id="hero" className='w-full h-screen relative'>
 
-            <div ref={cubeRef} className='w-full h-full bg-gradient-to-b from-black to-transparent'></div>
+            <div ref={cubeRef} className='w-full h-full bg-gradient-to-b from-gray-500 to-transparent'></div>
 
             {/* menu lateral */}
             <div className='absolute z-50 top-0 left-0 w-80 md:w-96 h-full p-4 -translate-x-[calc(100%-12px)] hover:translate-x-0 transition-all duration-300 after:content-[""] after:absolute after:top-1/2 after:translate-y-[-50%] after:right-0 after:w-3 after:h-42 after:bg-primary after:rounded-r-lg after:z-[-1] after:cursor-pointer'>
-                <div className='bg-white/10 backdrop-blur-sm px-10 py-12 rounded-lg flex flex-col justify-between h-full'>
+                <div className='bg-black/50 backdrop-blur-sm px-10 py-12 rounded-lg flex flex-col justify-between h-full'>
                     <ul className='flex flex-col gap-6 uppercase'>
                         <li className='group/item'>
-                            <span className={`block font-bold transition-all duration-300 ${currentProject === 'monkey' ? 'text-primary' : 'text-white/50'}`}>01</span>
-                            <div onClick={() => handleProjectClick('monkey')} className={`text-3xl inline-block font-bold cursor-pointer group-hover/item:text-white group-hover/item:pl-2 transition-all duration-300 ${currentProject === 'monkey' ? 'text-white' : 'text-white/50'}`}>
-                                Casa de campo
-                            </div>
-                        </li>
-                        <li className='group/item'>
-                            <span className={`block font-bold transition-all duration-300 ${currentProject === 'cube' ? 'text-primary' : 'text-white/50'}`}>02</span>
-                            <div onClick={() => handleProjectClick('cube')} className={`text-3xl inline-block font-bold cursor-pointer group-hover/item:text-white group-hover/item:pl-2 transition-all duration-300 ${currentProject === 'cube' ? 'text-white' : 'text-white/50'}`}>
-                                Edificio residencial
-                            </div>
-                        </li>
-                        <li className='group/item'>
-                            <span className={`block font-bold transition-all duration-300 ${currentProject === 'cone' ? 'text-primary' : 'text-white/50'}`}>03</span>
-                            <div onClick={() => handleProjectClick('cone')} className={`text-3xl inline-block font-bold cursor-pointer group-hover/item:text-white group-hover/item:pl-2 transition-all duration-300 ${currentProject === 'cone' ? 'text-white' : 'text-white/50'}`}>
+                            <span className={`block font-bold transition-all duration-300 ${currentProject === 'casadeluxo' ? 'text-primary' : 'text-white/50'}`}>01</span>
+                            <div onClick={() => handleProjectClick('casadeluxo')} className={`text-3xl inline-block font-bold cursor-pointer group-hover/item:text-white group-hover/item:pl-2 transition-all duration-300 ${currentProject === 'casadeluxo' ? 'text-white' : 'text-white/50'}`}>
                                 Casa de lujo
                             </div>
                         </li>
                         <li className='group/item'>
-                            <span className={`block font-bold transition-all duration-300 ${currentProject === 'cylinder' ? 'text-primary' : 'text-white/50'}`}>04</span>
-                            <div onClick={() => handleProjectClick('cylinder')} className={`text-3xl inline-block font-bold cursor-pointer group-hover/item:text-white group-hover/item:pl-2 transition-all duration-300 ${currentProject === 'cylinder' ? 'text-white' : 'text-white/50'}`}>
-                                Edificio comercial
+                            <span className={`block font-bold transition-all duration-300 ${currentProject === 'casaconcubiertasinclinadas' ? 'text-primary' : 'text-white/50'}`}>02</span>
+                            <div onClick={() => handleProjectClick('casaconcubiertasinclinadas')} className={`text-3xl inline-block font-bold cursor-pointer group-hover/item:text-white group-hover/item:pl-2 transition-all duration-300 ${currentProject === 'casaconcubiertasinclinadas' ? 'text-white' : 'text-white/50'}`}>
+                                Casa moderna con cubiertas inclinadas
                             </div>
                         </li>
                     </ul>
