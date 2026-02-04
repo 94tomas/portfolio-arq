@@ -5,6 +5,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 const MainHero3D: React.FC = () => {
     const [currentProject, setCurrentProject] = useState('casadeluxo');
+    const [isLoading, setIsLoading] = useState(true);
 
     const handleProjectClick = (project: string) => {
         setCurrentProject(project);
@@ -119,6 +120,9 @@ const MainHero3D: React.FC = () => {
         const loader = new GLTFLoader();
         const modelPath = projectModelMap[currentProject] || projectModelMap['monkey'];
 
+        // Iniciar loading
+        setIsLoading(true);
+
         // Remover el modelo anterior si existe
         if (currentModelRef.current) {
             scene.remove(currentModelRef.current);
@@ -137,21 +141,91 @@ const MainHero3D: React.FC = () => {
         }
 
         // Cargar el nuevo modelo
-        loader.load(modelPath, (gltf) => {
-            const model = gltf.scene;
-            currentModelRef.current = model;
-            scene.add(model);
-            model.position.y = 0;
-            model.position.x = 0;
-            model.position.z = 0;
-        }, undefined, (error) => {
-            console.error(`Error loading ${currentProject} model`, error);
-        });
+        loader.load(
+            modelPath, 
+            (gltf) => {
+                const model = gltf.scene;
+                currentModelRef.current = model;
+                scene.add(model);
+                model.position.y = 0;
+                model.position.x = 0;
+                model.position.z = 0;
+                setIsLoading(false);
+            }, 
+            (progress) => {
+                // Opcional: puedes usar progress para mostrar porcentaje
+                // console.log('Loading progress:', (progress.loaded / progress.total * 100) + '%');
+            }, 
+            (error) => {
+                console.error(`Error loading ${currentProject} model`, error);
+                setIsLoading(false);
+            }
+        );
     }, [currentProject]);
     return (
         <section id="hero" className='w-full h-screen relative'>
 
             <div ref={cubeRef} className='w-full h-full bg-gradient-to-b from-gray-500 to-transparent'></div>
+
+            {/* Loading overlay */}
+            {isLoading && (
+                <div className='fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-md'>
+                    <div className='flex flex-col items-center gap-6'>
+                        {/* Animación de construcción arquitectónica - Edificio escalonado */}
+                        <div className='relative w-32 h-40 flex items-end justify-center'>
+                            {/* Base del edificio */}
+                            <div className='relative w-20 h-20 border-2 border-primary/50 rounded-t-lg bg-primary/10 overflow-hidden'>
+                                <div 
+                                    className='absolute bottom-0 left-0 w-full bg-primary/40 rounded-t-lg transition-all duration-500'
+                                    style={{
+                                        animation: 'build 1.5s ease-in-out infinite',
+                                        height: '0%'
+                                    }}
+                                ></div>
+                            </div>
+                            {/* Piso 2 */}
+                            <div className='absolute bottom-20 left-1/2 -translate-x-1/2 w-16 h-16 border-2 border-primary/50 rounded-t-lg bg-primary/10 overflow-hidden'>
+                                <div 
+                                    className='absolute bottom-0 left-0 w-full bg-primary/40 rounded-t-lg transition-all duration-500'
+                                    style={{
+                                        animation: 'build 1.5s ease-in-out 0.3s infinite',
+                                        height: '0%'
+                                    }}
+                                ></div>
+                            </div>
+                            {/* Piso 3 */}
+                            <div className='absolute bottom-32 left-1/2 -translate-x-1/2 w-12 h-12 border-2 border-primary/50 rounded-t-lg bg-primary/10 overflow-hidden'>
+                                <div 
+                                    className='absolute bottom-0 left-0 w-full bg-primary/40 rounded-t-lg transition-all duration-500'
+                                    style={{
+                                        animation: 'build 1.5s ease-in-out 0.6s infinite',
+                                        height: '0%'
+                                    }}
+                                ></div>
+                            </div>
+                            {/* Techo */}
+                            <div className='absolute bottom-40 left-1/2 -translate-x-1/2 w-8 h-4 border-2 border-primary/50 rounded-t-lg bg-primary/10 overflow-hidden'>
+                                <div 
+                                    className='absolute bottom-0 left-0 w-full bg-primary/40 rounded-t-lg transition-all duration-500'
+                                    style={{
+                                        animation: 'build 1.5s ease-in-out 0.9s infinite',
+                                        height: '0%'
+                                    }}
+                                ></div>
+                            </div>
+                        </div>
+                        {/* Texto de carga */}
+                        <div className='text-center'>
+                            <p className='text-white text-lg font-semibold mb-2'>Cargando modelo 3D</p>
+                            <div className='flex gap-1 justify-center'>
+                                <div className='w-2 h-2 bg-primary rounded-full animate-bounce' style={{ animationDelay: '0s' }}></div>
+                                <div className='w-2 h-2 bg-primary rounded-full animate-bounce' style={{ animationDelay: '0.2s' }}></div>
+                                <div className='w-2 h-2 bg-primary rounded-full animate-bounce' style={{ animationDelay: '0.4s' }}></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* menu lateral */}
             <div className='absolute z-50 top-0 left-0 w-80 md:w-96 h-full p-4 -translate-x-[calc(100%-12px)] hover:translate-x-0 transition-all duration-300 after:content-[""] after:absolute after:top-1/2 after:translate-y-[-50%] after:right-0 after:w-3 after:h-42 after:bg-primary after:rounded-r-lg after:z-[-1] after:cursor-pointer'>
