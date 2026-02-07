@@ -71,9 +71,9 @@ const MainHero3D: React.FC = () => {
             plane.receiveShadow = true; // Recibir sombras
             scene.add(plane);
 
-            camera.position.x = -15;
-            camera.position.y = 8;
-            camera.position.z = 22;
+            camera.position.x = -18;
+            camera.position.y = 10;
+            camera.position.z = 25;
 
             // controls
             const controls = new OrbitControls(camera, renderer.domElement);
